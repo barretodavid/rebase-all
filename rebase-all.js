@@ -1,4 +1,4 @@
-const { Repository, Branch, AnnotatedCommit, Reference, Rebase } = require('nodegit');
+const { Repository, Branch, AnnotatedCommit, Reference, Rebase, Signature } = require('nodegit');
 
 const MASTER = 'master';
 
@@ -10,25 +10,33 @@ Repository
   .then(processReferences)
   .then(({repository, masterAnnotatedCommit, branchesAnnotatedCommit}) => {
     let doRebases = branchesAnnotatedCommit.map(branchAnnotatedCommit => {
-      return Rebase.init(repository, branchAnnotatedCommit, masterAnnotatedCommit);
+      return Rebase.init(
+        repository, 
+        branchAnnotatedCommit, 
+        masterAnnotatedCommit, 
+        masterAnnotatedCommit
+      );
     })
-    return Promise.all(doRebases);
+    let createSignature = Signature.default(repository);
+    return Promise.all([createSignature, ...doRebases]);
   })
-  .then(rebases => {
-    console.log('end');
-    console.log(rebases)
+  .then(([signature, ...rebases]) => {
+    console.log(signature);
+    rebases.map(rebase => {
+      rebase.finish(signature);
+    });
   });
 
+
+
+
+
   function processReferences({repository, references}) {
+
     let masterReference = references.find(reference => reference.shorthand() === MASTER);
     let branchesReference = references.filter(reference => reference.shorthand !== MASTER)
 
-     
-
     let createMasterAnnotatedCommit = AnnotatedCommit.fromRef(repository, masterReference);
-
-    
-
     let createBranchesAnnotatedCommit = branchesReference.map(reference => (
         AnnotatedCommit.fromRef(repository, reference)
       )
