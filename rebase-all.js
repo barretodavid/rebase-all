@@ -21,10 +21,10 @@ Repository
     return Promise.all([createSignature, ...doRebases]);
   })
   .then(([signature, ...rebases]) => {
-    console.log(signature);
     rebases.map(rebase => {
       rebase.finish(signature);
     });
+    console.log('rebase completed');
   });
 
 
