@@ -24,7 +24,13 @@ Repository
     rebases.map(rebase => {
       rebase.finish(signature);
     });
-    console.log('rebase completed');
+    
+  })
+  .then(() => {
+    console.log('Rebase completed!');
+  })
+  .catch(error => {
+    throw new Error(`Rebase failed: ${error}`);
   });
 
 
