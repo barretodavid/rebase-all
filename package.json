@@ -1,18 +1,25 @@
 {
   "name": "rebase-all",
   "version": "0.1.0",
-  "description": "Utility to rebase all branches on top of master",
+  "description": "Utility to rebase all branches on top of master.",
   "main": "rebase-all.js",
-  "scripts": {
-    "rebase-all": "node rebase-all.js"
-  },
-  "keywords": ["node", "git", "rebase", "nodegit"],
-  "author": "David Barreto <barretollano@gmail.com>",
-  "license": "ISC",
   "dependencies": {
     "nodegit": "0.16.0"
   },
   "devDependencies": {
     "@types/node": "0.0.2"
-  }
+  },
+  "scripts": {
+    "rebase-all": "node rebase-all.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barretodavid/rebase-all.git"
+  },
+  "author": "David Barreto <barretollano@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/barretodavid/rebase-all/issues"
+  },
+  "homepage": "https://github.com/barretodavid/rebase-all#readme"
 }
